@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
 import {
   MdRssFeed,
@@ -33,26 +35,35 @@ const NAV_ITEMS = [
 ];
 
 const Header = () => {
+  const { pathname } = useLocation();
   return (
     <header className="shadow-md">
       <nav className="flex items-center justify-evenly space-x-10 text-black bg-white lg:w-4/5 w-full px-2 py-4 mx-auto ">
-        <a href="/">
+        <NavLink to="/feed">
           <Logo />
-        </a>
+        </NavLink>
         <nav className="flex space-x-5 lg:space-x-10">
           {NAV_ITEMS.map((item, index) => (
-            <a
-              href="/"
+            <NavLink
+              to={`/${item.text}`}
               key={index}
               className="flex flex-col relative space-y-1 items-center text-xs group"
             >
-              <span className="text-3xl md:text-2xl text-black group-hover:text-blue transition-all">
+              <span
+                className={`text-3xl md:text-2xl text-black group-hover:text-blue transition-all ${
+                  pathname === `/${item.text}` ? "text-blue" : ""
+                }`}
+              >
                 {item.icon}
               </span>
-              <p className="uppercase hidden md:block group-hover:text-blue transition-all">
+              <p
+                className={`uppercase hidden md:block group-hover:text-blue transition-all ${
+                  pathname === `/${item.text}` ? "text-blue" : ""
+                }`}
+              >
                 {item.text}
               </p>
-            </a>
+            </NavLink>
           ))}
         </nav>
         <div className="flex-1 xl:flex items-center hidden">
